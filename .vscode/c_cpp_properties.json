@@ -5,6 +5,8 @@
             "includePath": [
                 "/home/jaywhyokay/.arduino15/packages/esp8266/tools/**",
                 "/home/jaywhyokay/.arduino15/packages/esp8266/hardware/esp8266/2.5.2/**",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_SSD1306/**",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_GFX_Library/**",
                 "${workspaceFolder}/**"
             ],
             "defines": ["_ESP8266"],
