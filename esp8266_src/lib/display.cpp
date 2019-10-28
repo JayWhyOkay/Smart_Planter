@@ -1,18 +1,18 @@
 #include "display.h"
 
-C_Display::C_Display(){
+Display_Module::Display_Module(){
 
 }
 
 /*  Initialization function 
- *    - Prints to Serial that C_Display module is initialized successfully.
+ *    - Prints to Serial that Display_Module module is initialized successfully.
  */
-void C_Display::init(int voltage_setting, int i2c_address, uint8_t battery, uint8_t wifi){
+void Display_Module::init(int voltage_setting, int i2c_address, uint8_t battery, uint8_t wifi){
     Serial.println(F("[Display] Display is initializing..."));
 
     if(!display.begin(voltage_setting, i2c_address)){
         Serial.println(F("[Display] ERROR in initialization of display!!!"));
-        watchdog.blocking_loop_blink_LED(EXTERNAL_LED_PIN);
+        watchdog.blocking_loop_blink_LED();
     }
     display.display();
     display.clearDisplay();
@@ -25,14 +25,14 @@ void C_Display::init(int voltage_setting, int i2c_address, uint8_t battery, uint
 /*
  *
  */
-void C_Display::initiate_status(){
+void Display_Module::initiate_status(){
     
 }
 
 /*
  *
  */
-void C_Display::draw_battery_status(uint8_t status){
+void Display_Module::draw_battery_status(uint8_t status){
     display.clearDisplay();
 
     display.display();
@@ -42,7 +42,7 @@ void C_Display::draw_battery_status(uint8_t status){
 /*
  * Function to test display output
  */
-void C_Display::testdrawlines(){
+void Display_Module::testdrawlines(){
     int16_t i;
 
     display.clearDisplay(); // Clear display buffer

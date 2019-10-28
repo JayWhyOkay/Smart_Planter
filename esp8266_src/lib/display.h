@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
+// #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <SoftwareSerial.h>
 
@@ -25,7 +25,7 @@
 #define SIGNAL_LOW      1
 #define SIGNAL_NONE     0
 
-class C_Display{
+class Display_Module{
     /*
      *  Class to abstract display from Adafruit_SSD1306 Display.
      * 
@@ -42,10 +42,10 @@ class C_Display{
 
 public:
     
-    C_Display();
+    Display_Module();
 
     /*  Initialization function 
-     *    - Prints to Serial that C_Display module is initialized successfully.
+     *    - Prints to Serial that Display_Module module is initialized successfully.
      */
     void init(int voltage_setting, int i2c_address, uint8_t battery, uint8_t wifi);
 

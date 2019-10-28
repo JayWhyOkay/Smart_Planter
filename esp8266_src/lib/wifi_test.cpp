@@ -56,9 +56,8 @@ bool WiFi_Test::ping_host(byte count){
 void WiFi_Test::_ping_recv_cb(void *opt, void *resp){
     // Cast the parameters to get some usable info
     ping_resp*   ping_resp = reinterpret_cast<struct ping_resp*>(resp);
-    //ping_option* ping_opt  = reinterpret_cast<struct ping_option*>(opt);
 
-    // Error or success?
+    // Determine Error or Success
     if (ping_resp->ping_err == -1)
         _errors++;
     else {
@@ -66,7 +65,7 @@ void WiFi_Test::_ping_recv_cb(void *opt, void *resp){
         _avg_time += ping_resp->resp_time;
     }
 
-    // Some debug info
+    // Set and print debug info
     DEBUG_PING(
             "DEBUG: ping reply\n"
             "\ttotal_count = %d \n"
@@ -82,11 +81,11 @@ void WiFi_Test::_ping_recv_cb(void *opt, void *resp){
             ping_resp->total_time, ping_resp->ping_err
     );
 
-    // Is it time to end?
-    // Don't using seqno because it does not increase on error
+    // Check if time to end
     if (_success + _errors == _expected_count) {
         _avg_time = _success > 0 ? _avg_time / _success : 0;
 
+        // Print debug statement if declared 
         DEBUG_PING("Avg resp time %d ms\n", _avg_time);
 
         // Done, return to main functiom

@@ -1,9 +1,6 @@
 #ifndef __INTERNAL_DEBUG__
 #define __INTERNAL_DEBUG__
-
-
 #include <Arduino.h>
-
 #include "constants.h"
 
 class Watchdog{
@@ -21,8 +18,7 @@ public:
     void init();
 
     /* */
-    void blocking_loop_blink_LED(uint8_t pin);
-
+    void blocking_loop_blink_LED();
 };
 
 #endif
