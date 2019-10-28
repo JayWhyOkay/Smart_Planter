@@ -1,50 +1,50 @@
 /* Includes and libary supports */
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <ESP8266WiFi.h>
 
-#include "watchdog.h"
-#include "constants.h"
-#include "display.h"
+#include "lib/display.h"
+#include "lib/watchdog.h"
+#include "lib/wifi_test.h"
 
 /* Initialization of global variables */
-// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-Watchdog watchdog;
-C_Display display;
-
-void testdrawline();
+Watchdog watchdog;              //! Debug Library Setup
+C_Display display;              //! Display Library
+WiFi_Test wifi_session;
+const char* ssid      = SS_ID;  //! SS_ID 
+const char* password  = SS_PW;  //! SS_PW 
 
 /* ----------------------------
  * Initialization and setup
  * ---------------------------- */
 void setup() {
-  /* Initialize serial port */
-  delay(1000);
-  Serial.begin(115200);
-  Serial.println(F("Initializing Serial"));
-  Serial.println(F("**** SETUP IS INITIALIZING ****"));
+    /* Initialize serial port */
+    delay(1000);
+    Serial.begin(115200);
+    Serial.println(F("Initializing Serial"));
+    Serial.println(F("**** SETUP IS INITIALIZING ****"));
 
-  /* initialize digital OUT pins */
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(EXTERNAL_LED_PIN, OUTPUT);
+    /* initialize digital OUT pins */
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(EXTERNAL_LED_PIN, OUTPUT);
 
-  /* Initialize Wire for I2C Communication*/
-  Wire.begin();
+    /* Initialize Wire for I2C Communication*/
+    Wire.begin();
 
-  /* Watchdog Initialization */
-  watchdog.init();
+    /* Watchdog Initialization */
+    watchdog.init();
 
   /* Initialize Display */
-  display.init(SSD1306_SWITCHCAPVCC, I2C_ADDRESS, BATTERY_HIGH, SIGNAL_HIGH);
-  display.draw_battery_status(BATTERY_HIGH);
+    wifi_session.init();
 
-  Serial.println(F("**** SETUP IS FINISHED ****"));
+    /* FINISH SETUP */
+    Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
 /* ----------------------------
  * Main Loop
  * ---------------------------- */
 void loop() {
-  // display.testdrawlines();
+    wifi_session.ping_host(5);
+
 
 }

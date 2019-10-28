@@ -35,8 +35,6 @@ void C_Display::initiate_status(){
 void C_Display::draw_battery_status(uint8_t status){
     display.clearDisplay();
 
-    display.drawBitmap(0, 0, 
-                        test, 16, 16, 1  );
     display.display();
     delay(1000);
 }

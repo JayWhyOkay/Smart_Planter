@@ -1,0 +1,7 @@
+# VS Code Ignores 
+*.vscode
+
+# Python Ignores 
+
+# CPP Ignores 
+*.o
