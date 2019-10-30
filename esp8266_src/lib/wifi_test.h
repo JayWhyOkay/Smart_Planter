@@ -11,8 +11,8 @@ extern "C" {
 } 
 
 #ifndef WIFI_CONF
-    #define SS_ID       "Kim Family"
-    #define SS_PW       "9497690303"
+    #define SS_ID       ""
+    #define SS_PW       ""
     #define HOST_ID     "www.google.com"
     #define HOST_PORT   5000
 #endif 
