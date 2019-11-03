@@ -4,11 +4,11 @@ The goal of this project is to upload temperature data to a local server and sto
 
 The current steps in this projects are the following:
 - [x] Design the board (completed)
-- [ ] Establish the build-environment
+- [x] Establish the build-environment
 - [ ] Code the display
-- [ ] Code the DHT Sensor
+- [x] Code the DHT Sensor
 - [ ] Code the soil moister (tentative)
-- [ ] Code the Wifi Module to send data
+- [x] Code the Wifi Module to send data
 - [ ] Code the server to accept and ack the data
 - [ ] Others
 
