@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 <link rel="stylesheet" type="text/css" href="{% static 'css/graphs.css'%}" />
+	<title>PharmSmart</title>
+</head>
+
+<body>
+	<div class = "wrapper">
+		<div >
+			{% include 'navbar.html' %}
+		</div>
+		<div class =  "title">
+			<h2 class = "headersub2">Graphs Page</h2>
+		</div>
+		<div class = "bodypage">
+
+
+			<div class = "leftside">
+				<div id = "leftofgraph">
+						<p> a title maybe </p>
+				</div>
+				<div id = "graph">
+					{% for numbers in object %}
+					<div class = "bar" style ="width: {{numbers.temp}}em;
+										 margin: 0;
+										 font-size: 14px;
+										 padding-left: 10px;
+										 ">
+						{{numbers.temp}}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		<div class = "rightside">
+				<p id = "home_page_description"> </p>
+		</div>
+	</div>
+		<div class = "footer">
+			<p id= "footertext">
+			&copy; Copyright 2019
+		  	</p>
+		</div>
+	</div>
+</body>
+</html>
