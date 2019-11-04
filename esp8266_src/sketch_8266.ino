@@ -1,22 +1,20 @@
 /* Includes and libary supports */
 #include <Wire.h>
 #include <ESP8266WiFi.h>
-#include <DHT.h>
 
 #include "constants.h"
 #include "lib/display.h"
 #include "lib/watchdog.h"
 #include "lib/wifi_test.h"
+#include "lib/cust_dht.h"
 
 /* Initialization of global variables */
 Watchdog watchdog;              //! Debug Library Setup
 Display_Module display;              //! Display Library
 WiFi_Test wifi_session;
-DHT dht(DHT_PIN, 11);
 
 const char* ssid      = SS_ID;  //! SS_ID 
 const char* password  = SS_PW;  //! SS_PW 
-
 
 void setup() {
     /* ----------------------------
@@ -40,7 +38,7 @@ void setup() {
 
     /* DHT Initialization */
     dht.begin();
-
+    
     /* Initialize Display */
     wifi_session.init();
 
@@ -62,42 +60,12 @@ void loop() {
     }
     delay(1000);
 
-    // Read DHT Sensor
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
-    float c = (dht.readTemperature(true) - (float)32 ) * (float)(5/9);
-    float f = dht.readTemperature(true);
-
-    if (isnan(h) || isnan(t) || isnan(f)) {
-        Serial.println("Failed to read from DHT sensor");
-        blink_RGB_LED(100, HIGH, LOW, HIGH); // YELLOW if FAIL
+    bool dht_success = read_DHT_values();
+    if(dht_success){
+        blink_RGB_LED(100, LOW, LOW, HIGH);
+    } 
+    else {
+        blink_RGB_LED(100, HIGH, LOW, HIGH);
     }
-    else{
-        float hic = dht.computeHeatIndex(t, h, false);
-        float hif = dht.computeHeatIndex(f, h, true);
-        Serial.print("\nHumidity: ");
-        Serial.print(h);
-        Serial.print(" %\t Temperature: ");
-        Serial.print(t);
-        Serial.print(" *C ");
-        Serial.print(f);
-        Serial.print(" *F\t Heat index: ");
-        Serial.print(hic);
-        Serial.print(" *C ");
-        Serial.print(hif);
-        Serial.print(" *F");
-        Serial.print("Humidity: ");
-        Serial.print(h);
-        Serial.print(" %\t Temperature: ");
-        Serial.print(t);
-        Serial.print(" *C ");
-        Serial.print(f);
-        Serial.print(" *F\t Heat index: ");
-        Serial.print(hic);
-        Serial.print(" *C ");
-        Serial.print(hif);
-        Serial.println(" *F");
-        blink_RGB_LED(100, LOW, LOW, HIGH); // Blue if success
-    }
-    delay(1000);
+    delay(2000);
 }
