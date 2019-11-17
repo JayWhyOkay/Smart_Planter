@@ -1,5 +1,8 @@
 # VS Code Ignores 
-*.vscode
+.vscode/arduino.json
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+sensitive_data.txt
 
 # Python Ignores 
 
