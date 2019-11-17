@@ -21,10 +21,76 @@ void WiFi_Test::init(){
     Serial.println(WiFi.localIP());
 }
 
-void WiFi_Test::connect_to_host(){
-    
+void WiFi_Test::do_http_request(char* request, char* response, uint16_t response_size, 
+    uint16_t response_timeout){
+    WiFiClient client;
+    // const char* _url = "/data/collection.py";
+    if (client.connect(HOST_ID, HOST_PORT)){
+        client.print(request);
+
+        memset(response, 0, response_size);
+        uint32_t timeout_counter = millis();
+        while (client.connected()){
+            client.readBytesUntil('\n', response, response_size);
+            Serial.println(response);
+            if (strcmp(response, "\r")){
+                break;
+            }
+            memset(response, 0, response_size);
+            if (millis() - timeout_counter > response_timeout){
+                break;
+            }
+        }
+        memset(response, 0, response_size);
+        timeout_counter = millis();
+        while (client.available()){
+            append_char(response, client.read(), OUT_BUFFER_SIZE);
+        }
+        Serial.println(response);
+    }
+    else {
+        Serial.println("Connection to server failed!");
+        
+    }
+    client.stop();
 }
 
+void WiFi_Test::do_post_request(){
+    Serial.println("Attempting Post Request!");
+    char body[200];
+    sprintf(body, "text=%s", "TESTING");
+
+    int body_length = strlen(body);
+    Serial.println(body);
+    sprintf(request_buffer, "POST %s HTTP/1.1\r\n", HOST_PATH);
+    strcat(request_buffer, "Host: ");
+    strcat(request_buffer, HOST_ID);
+    strcat(request_buffer, "\r\n");
+    // sprintf(request_buffer, "Host: %s\r\n", HOST_ID);
+    strcat(request_buffer, "Content-Type: application/x-www-form-urlencoded\r\n");
+    sprintf(request_buffer + strlen(request_buffer), "Content-Length: %d\r\n", body_length);
+    strcat(request_buffer, "\r\n");
+    strcat(request_buffer, body);
+    strcat(request_buffer, "\r\n");
+    Serial.println("PRINTING REQUEST BUFFER");
+    Serial.println(request_buffer);
+    do_http_request(request_buffer, response_buffer, OUT_BUFFER_SIZE, 6000 );
+}
+
+uint8_t WiFi_Test::append_char(char* buffer, char c, uint16_t buffer_size){
+    int length = strlen(buffer);
+    if (length >= buffer_size){
+        return 0;
+    }
+    else {
+        buffer[length] = c;
+        buffer[length+1] = '\0';
+        return 1;
+    }
+}
+
+
+/* Ping Tests */
 bool WiFi_Test::ping_host(byte count){
     IPAddress _remote_address;
     if (WiFi.hostByName(host_id, _remote_address)){

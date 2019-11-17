@@ -10,12 +10,14 @@ extern "C" {
     #include <ping.h>
 } 
 
-#ifndef WIFI_CONF
-    #define SS_ID       ""
-    #define SS_PW       ""
-    #define HOST_ID     "www.google.com"
-    #define HOST_PORT   5000
-#endif 
+#define SS_ID       ""
+#define SS_PW       ""
+#define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
+#define HOST_PATH   "/data_collection/receive.py"
+#define HOST_PORT   80
+
+#define IN_BUFFER_SIZE 1000
+#define OUT_BUFFER_SIZE 1000
 
 #ifdef _ENABLE_WIFI_DEBUG
     #define DEBUG_PING(...) Serial.printf(__VA_ARGS__)
@@ -32,9 +34,12 @@ class WiFi_Test{
     const char* ss_pw   = SS_PW;
 
     const char* host_id = HOST_ID;
-    uint8_t host_port   = HOST_PORT;
-    
-    WiFiClient client = WiFiClient();
+    const uint8_t host_port   = HOST_PORT;
+
+    char request_buffer[IN_BUFFER_SIZE];
+    char response_buffer[OUT_BUFFER_SIZE];
+
+    uint8_t connection_state = 0;
 
 protected:
     static byte _expected_count;
@@ -65,8 +70,18 @@ public:
      * 
      * Note: connection to an access point will be necessary first
      */
-    void connect_to_host();
 
+    void do_http_request(char* request, char* response, uint16_t response_size, 
+        uint16_t response_timeout);
+
+    uint8_t append_char(char* buffer, char c, uint16_t buffer_size);
+
+    void do_post_request();
+
+    /* ** Testing Functions
+     * - ping functions to test functionality 
+     *   of WiFi module
+     */
     bool ping_host(byte count);
 
     int average_time();

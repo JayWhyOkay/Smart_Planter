@@ -52,20 +52,25 @@ void loop() {
      * Main Loop
      * ---------------------------- */
     // Loop test ping to Google
-    if (wifi_session.ping_host(1)){
-        blink_RGB_LED(100, LOW, HIGH, LOW); // Blink Green if ping
-    }
-    else {
-        blink_RGB_LED(100, HIGH, LOW, LOW); // Red if FAIL
-    }
-    delay(1000);
+    // if (wifi_session.ping_host(1)){
+    //     blink_RGB_LED(100, LOW, HIGH, LOW); // Blink Green if ping
+    // }
+    // else {
+    //     blink_RGB_LED(100, HIGH, LOW, LOW); // Red if FAIL
+    // }
+    // delay(1000);
 
-    bool dht_success = read_DHT_values();
-    if(dht_success){
-        blink_RGB_LED(100, LOW, LOW, HIGH);
-    } 
-    else {
-        blink_RGB_LED(100, HIGH, LOW, HIGH);
-    }
-    delay(2000);
+    // bool dht_success = read_DHT_values();
+    // if(dht_success){
+    //     blink_RGB_LED(100, LOW, LOW, HIGH);
+    // } 
+    // else {
+    //     blink_RGB_LED(100, HIGH, LOW, HIGH);
+    // }
+    // delay(2000);
+
+    wifi_session.do_post_request();
+
+    delay(5000);
+
 }
