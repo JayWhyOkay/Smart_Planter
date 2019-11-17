@@ -2,8 +2,6 @@
 #include <SoftwareSerial.h>
 #include "constants.h"
 
-//#ifndef _USE_CUSTOM_PR
-
 float get_PR_voltage()
 {
     int sensorValue = analogRead(PhotoResistor);

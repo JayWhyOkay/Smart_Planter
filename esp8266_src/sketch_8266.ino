@@ -7,6 +7,7 @@
 #include "lib/watchdog.h"
 #include "lib/wifi_test.h"
 #include "lib/cust_dht.h"
+#include "lib/cust_pr.h"
 
 /* Initialization of global variables */
 Watchdog watchdog;              //! Debug Library Setup
