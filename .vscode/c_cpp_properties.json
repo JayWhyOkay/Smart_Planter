@@ -5,10 +5,25 @@
             "includePath": [
                 "/home/jaywhyokay/.arduino15/packages/esp8266/tools/**",
                 "/home/jaywhyokay/.arduino15/packages/esp8266/hardware/esp8266/2.5.2/**",
-                "${workspaceFolder}/**"
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_SSD1306/**",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_GFX_Library/*",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_Unified_Sensor/*",
+                "/home/jaywhyokay/Arduino/libraries/DHT_sensor_library/*",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/esp8266_src/**",
+                "${workspaceFolder}/esp8266_src/lib/**"
             ],
-            "defines": ["_ESP8266"],
-            "compilerPath": "/usr/bin/gcc",
+            "defines": [
+                "_ESP8266"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": false,
+                "databaseFilename": ""
+            },
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64",

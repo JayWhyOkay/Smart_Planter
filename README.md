@@ -11,6 +11,7 @@ The current steps in this projects are the following:
 - [x] Code the Wifi Module to send data
 - [ ] Code the server to accept and ack the data
 - [ ] Others
+- [ ] Configure server 
 
 ## Board Design
 
@@ -52,7 +53,7 @@ Lastly, install whatever IDE you find comfortable. Look this up yourself, or fol
 
 To get started, the Arduino IDE is required for library setup and installation. **Despite downloading the IDE, you are free to use whatever IDE or text editor you wish. VS Code, Sublime Text, or vim is fine.** Download the Arduino IDE and follow [the instructions depicting "Installing with Boards Manager"](https://github.com/esp8266/Arduino/blob/master/README.md).
 
-Next, follow the instructions [here](https://github.com/plerup/makeEspArduino) in order to setup the makefile environment. Scroll down to **installing**. To make the call to the makefile easier, make an alias by typing the following line in terminal:
+Next, follow the instructions [https://github.com/plerup/makeEspArduino](here) in order to setup the makefile environment. Scroll down to **installing**. To make the call to the makefile easier, make an alias by typing the following line in terminal:
 
 ```bash
 alias espmake="make -f ~/makeEspArduino/makeEspArduino.mk"

@@ -1,114 +1,77 @@
 /* Includes and libary supports */
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <ESP8266WiFi.h>
 
-#include "debug.h"
 #include "constants.h"
+#include "lib/display.h"
+#include "lib/watchdog.h"
+#include "lib/wifi_test.h"
+#include "lib/cust_dht.h"
+#include "lib/cust_pr.h"
 
 /* Initialization of global variables */
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-Watchdog debug;
+Watchdog watchdog;              //! Debug Library Setup
+Display_Module display;              //! Display Library
+WiFi_Test wifi_session;
 
-void testdrawline();
+const char* ssid      = SS_ID;  //! SS_ID 
+const char* password  = SS_PW;  //! SS_PW 
 
-/* ----------------------------
- * Initialization and setup
- * ---------------------------- */
 void setup() {
-  /* Initialize serial port */
-  delay(1000);
-  Serial.begin(115200);
-  Serial.println(F("Initializing Serial"));
+    /* ----------------------------
+     * Initialization and setup
+     * ---------------------------- */
+    /* Initialize serial port */
+    delay(1000);
+    Serial.begin(115200);
+    Serial.println(F("Initializing Serial"));
+    Serial.println(F("**** SETUP IS INITIALIZING ****"));
 
-  /* Initialize Wire for I2C Communication*/
-  Wire.begin();
+    /* initialize digital OUT pins */
+    pinMode(LED_BUILTIN, OUTPUT); digitalWrite(LED_BUILTIN, LOW);
+    initialize_RGB_LED();
 
-  /* initialize digital OUT pins */
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(EXTERNAL_LED_PIN, OUTPUT);
+    /* Initialize Wire for I2C Communication*/
+    Wire.begin();
 
-  /* Initialize display */
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){
-    Serial.println(F("SSD1306 Allocation failed!"))
-    debug.loop_blink_LED(EXTERNAL_LED_PIN);
-  }
-  display.display();
-  delay(2000);
-  display.clearDisplay();
-  display.drawPixel(10,10,WHITE);
-  display.display();
-  delay(2000);
-  testdrawline();
+    /* Watchdog Initialization */
+    watchdog.init();
 
-  Serial.println(F("Finished Initialization!"));
+    /* DHT Initialization */
+    dht.begin();
+    
+    /* Initialize Display */
+    wifi_session.init();
+
+    /* FINISH SETUP */
+    Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
-/* ----------------------------
- * Main Loop
- * ---------------------------- */
+
 void loop() {
+    /* ----------------------------
+     * Main Loop
+     * ---------------------------- */
+    // Loop test ping to Google
+    // if (wifi_session.ping_host(1)){
+    //     blink_RGB_LED(100, LOW, HIGH, LOW); // Blink Green if ping
+    // }
+    // else {
+    //     blink_RGB_LED(100, HIGH, LOW, LOW); // Red if FAIL
+    // }
+    // delay(1000);
+
+    // bool dht_success = read_DHT_values();
+    // if(dht_success){
+    //     blink_RGB_LED(100, LOW, LOW, HIGH);
+    // } 
+    // else {
+    //     blink_RGB_LED(100, HIGH, LOW, HIGH);
+    // }
+    // delay(2000);
+
+    wifi_session.do_post_request();
+
+    delay(5000);
 
 }
-
-void testdrawline() {
-  int16_t i;
-
-  display.clearDisplay(); // Clear display buffer
-
-  for(i=0; i<display.width(); i+=4) {
-    display.drawLine(0, 0, i, display.height()-1, WHITE);
-    display.display(); // Update screen with each newly-drawn line
-    delay(1);
-  }
-  for(i=0; i<display.height(); i+=4) {
-    display.drawLine(0, 0, display.width()-1, i, WHITE);
-    display.display();
-    delay(1);
-  }
-  delay(250);
-
-  display.clearDisplay();
-
-  for(i=0; i<display.width(); i+=4) {
-    display.drawLine(0, display.height()-1, i, 0, WHITE);
-    display.display();
-    delay(1);
-  }
-  for(i=display.height()-1; i>=0; i-=4) {
-    display.drawLine(0, display.height()-1, display.width()-1, i, WHITE);
-    display.display();
-    delay(1);
-  }
-  delay(250);
-
-  display.clearDisplay();
-
-  for(i=display.width()-1; i>=0; i-=4) {
-    display.drawLine(display.width()-1, display.height()-1, i, 0, WHITE);
-    display.display();
-    delay(1);
-  }
-  for(i=display.height()-1; i>=0; i-=4) {
-    display.drawLine(display.width()-1, display.height()-1, 0, i, WHITE);
-    display.display();
-    delay(1);
-  }
-  delay(250);
-
-  display.clearDisplay();
-
-  for(i=0; i<display.height(); i+=4) {
-    display.drawLine(display.width()-1, 0, 0, i, WHITE);
-    display.display();
-    delay(1);
-  }
-  for(i=0; i<display.width(); i+=4) {
-    display.drawLine(display.width()-1, 0, i, display.height()-1, WHITE);
-    display.display();
-    delay(1);
-  }
-
-  delay(2000); // Pause for 2 seconds
-}
-
