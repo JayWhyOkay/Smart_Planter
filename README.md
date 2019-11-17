@@ -7,8 +7,8 @@ The current steps in this projects are the following:
 - [x] Establish the build-environment
 - [ ] Code the display
 - [x] Code the DHT Sensor
-- [ ] Code the soil moisture 
-- [ ] Code the Wifi Module to send data
+- [ ] Code the soil moister (tentative)
+- [x] Code the Wifi Module to send data
 - [ ] Code the server to accept and ack the data
 - [ ] Others
 - [ ] Configure server 
