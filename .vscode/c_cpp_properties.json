@@ -6,9 +6,9 @@
                 "/home/jaywhyokay/.arduino15/packages/esp8266/tools/**",
                 "/home/jaywhyokay/.arduino15/packages/esp8266/hardware/esp8266/2.5.2/**",
                 "/home/jaywhyokay/Arduino/libraries/Adafruit_SSD1306/**",
-                "/home/jaywhyokay/Arduino/libraries/Adafruit_GFX_Library/**",
-                "/home/jaywhyokay/Arduino/libraries/Adafruit_Unified_Sensor/**",
-                "/home/jaywhyokay/Arduino/libraries/DHT_sensor_library/**",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_GFX_Library/*",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_Unified_Sensor/*",
+                "/home/jaywhyokay/Arduino/libraries/DHT_sensor_library/*",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/esp8266_src/**",
                 "${workspaceFolder}/esp8266_src/lib/**"
@@ -21,7 +21,7 @@
                 "path": [
                     "${workspaceFolder}"
                 ],
-                "limitSymbolsToIncludedHeaders": true,
+                "limitSymbolsToIncludedHeaders": false,
                 "databaseFilename": ""
             },
             "cStandard": "c11",
