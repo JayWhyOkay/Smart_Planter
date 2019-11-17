@@ -8,19 +8,29 @@
 
 DHT dht(DHT_PIN, DHT_TYPE);
 
+private:
+float h;
+float t;
+//float c;
+float f;
+float hic;
+float hif;
 
-bool read_DHT_values(){
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
-    float c = (dht.readTemperature(true) - (float)32 ) * (float)(5/9);
-    float f = dht.readTemperature(true);
+bool read_DHT_values()
+{
+    h = dht.readHumidity();
+    t = dht.readTemperature();
+    //c = (dht.readTemperature(true) - (float)32) * (float)(5 / 9);
+    f = dht.readTemperature(true);
 
-    if (isnan(h) || isnan(t) || isnan(f)){
+    if (isnan(h) || isnan(t) || isnan(f))
+    {
         return false;
     }
-    else {
-        float hic = dht.computeHeatIndex(t, h, false);
-        float hif = dht.computeHeatIndex(f, h, true);
+    else
+    {
+        hic = dht.computeHeatIndex(t, h, false);
+        hif = dht.computeHeatIndex(f, h, true);
 
         Serial.print("\nHumidity: ");
         Serial.print(h);
@@ -37,8 +47,27 @@ bool read_DHT_values(){
     }
 }
 
-
-
+public:
+int getHumidity()
+{
+    return this.h;
+}
+int getCelsius()
+{
+    return this.t;
+}
+int getFahrenheit()
+{
+    return this.f;
+}
+int getHIC()
+{
+    return this.hic;
+}
+int getHIF()
+{
+    return this.hif;
+}
 
 #else
 #define custom_dht 0 // ignore for now

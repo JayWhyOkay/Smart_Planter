@@ -10,6 +10,9 @@
 /* DHT Defines */
 #define DHT_PIN 14
 
+/*PhotoResister Defines*/
+#define PhotoResistor A0
+
 /* WiFi Defines */
 
 /* Other Defines */
