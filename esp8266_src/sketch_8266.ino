@@ -3,7 +3,6 @@
 #include <ESP8266WiFi.h>
 
 #include "constants.h"
-#include "lib/display.h"
 #include "lib/watchdog.h"
 #include "lib/wifi_test.h"
 #include "lib/cust_dht.h"
@@ -11,7 +10,6 @@
 
 /* Initialization of global variables */
 Watchdog watchdog;              //! Debug Library Setup
-Display_Module display;              //! Display Library
 WiFi_Test wifi_session;
 
 const char* ssid      = SS_ID;  //! SS_ID 
