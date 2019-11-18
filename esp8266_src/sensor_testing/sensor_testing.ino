@@ -10,11 +10,12 @@
 #include "lib/cust_pr.h"
 
 /* Initialization of global variables */
-Watchdog watchdog;              //! Debug Library Setup
+Watchdog watchdog; //! Debug Library Setup
 // Display_Module display;              //! Display Library
 WiFi_Test wifi_session;
 
-void setup() {
+void setup()
+{
     /* ----------------------------
      * Initialization and setup
      * ---------------------------- */
@@ -25,7 +26,8 @@ void setup() {
     Serial.println(F("**** SETUP IS INITIALIZING ****"));
 
     /* initialize digital OUT pins */
-    pinMode(LED_BUILTIN, OUTPUT); digitalWrite(LED_BUILTIN, LOW);
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
     initialize_RGB_LED();
 
     /* Initialize Wire for I2C Communication*/
@@ -36,7 +38,7 @@ void setup() {
 
     /* DHT Initialization */
     dht.begin();
-    
+
     /* Initialize Display */
     wifi_session.init();
 
@@ -44,8 +46,8 @@ void setup() {
     Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
-
-void loop() {
+void loop()
+{
     /* ----------------------------
      * Main Loop
      * ---------------------------- */
@@ -58,10 +60,26 @@ void loop() {
     // }
     // delay(1000);
 
+    custDHT dht;
+    if (dht.read_DHT_values)
+    {
+        Serial.print("\nHumidity: ");
+        Serial.print(dht.getHumidity);
+        Serial.print(" %\t Temperature: ");
+        Serial.print(dht.getCelsius);
+        Serial.print(" *C ");
+        Serial.print(dht.getFahrenheit);
+        Serial.print(" *F\t Heat index: ");
+        Serial.print(dht.getHIC);
+        Serial.print(" *C ");
+        Serial.print(dht.getHIF);
+        Serial.print(" *F\n");
+    }
+
     // bool dht_success = read_DHT_values();
     // if(dht_success){
     //     blink_RGB_LED(100, LOW, LOW, HIGH);
-    // } 
+    // }
     // else {
     //     blink_RGB_LED(100, HIGH, LOW, HIGH);
     // }
@@ -70,5 +88,4 @@ void loop() {
     wifi_session.do_post_request();
 
     delay(5000);
-
 }
