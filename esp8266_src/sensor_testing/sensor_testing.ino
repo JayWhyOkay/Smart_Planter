@@ -1,91 +1,78 @@
-/* Includes and libary supports */
-#include <Wire.h>
-#include <ESP8266WiFi.h>
+#include "DHT.h"
+#include "Adafruit_seesaw.h"
 
-#include "constants.h"
-// #include "lib/display.h"
-#include "lib/watchdog.h"
-#include "lib/wifi_test.h"
-#include "lib/cust_dht.h"
-#include "lib/cust_pr.h"
+Adafruit_seesaw ss;
 
-/* Initialization of global variables */
-Watchdog watchdog; //! Debug Library Setup
-// Display_Module display;              //! Display Library
-WiFi_Test wifi_session;
+//#define DHTPIN 14
 
-void setup()
-{
-    /* ----------------------------
-     * Initialization and setup
-     * ---------------------------- */
-    /* Initialize serial port */
-    delay(1000);
-    Serial.begin(115200);
-    Serial.println(F("Initializing Serial"));
-    Serial.println(F("**** SETUP IS INITIALIZING ****"));
 
-    /* initialize digital OUT pins */
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, LOW);
-    initialize_RGB_LED();
+DHT dht(14, DHT11);
 
-    /* Initialize Wire for I2C Communication*/
-    Wire.begin();
-
-    /* Watchdog Initialization */
-    watchdog.init();
-
-    /* DHT Initialization */
-    dht.begin();
-
-    /* Initialize Display */
-    wifi_session.init();
-
-    /* FINISH SETUP */
-    Serial.println(F("**** SETUP IS FINISHED ****"));
+void setup() {
+  Serial.begin(9600);
+  if (!ss.begin(0x36))
+  {
+    Serial.println("ERROR! soil sensor not found");
+    while(1);
+  }
+  else
+  {
+    Serial.print("Soil Sensor: version ");
+    Serial.print(ss.getVersion(), HEX);
+  }
+  dht.begin();
 }
 
-void loop()
-{
-    /* ----------------------------
-     * Main Loop
-     * ---------------------------- */
-    // Loop test ping to Google
-    // if (wifi_session.ping_host(1)){
-    //     blink_RGB_LED(100, LOW, HIGH, LOW); // Blink Green if ping
-    // }
-    // else {
-    //     blink_RGB_LED(100, HIGH, LOW, LOW); // Red if FAIL
-    // }
-    // delay(1000);
+void loop() {
+  // Wait a few seconds between measurements.
+  delay(2000);
 
-    custDHT dht;
-    if (dht.read_DHT_values)
-    {
-        Serial.print("\nHumidity: ");
-        Serial.print(dht.getHumidity);
-        Serial.print(" %\t Temperature: ");
-        Serial.print(dht.getCelsius);
-        Serial.print(" *C ");
-        Serial.print(dht.getFahrenheit);
-        Serial.print(" *F\t Heat index: ");
-        Serial.print(dht.getHIC);
-        Serial.print(" *C ");
-        Serial.print(dht.getHIF);
-        Serial.print(" *F\n");
-    }
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit
+  float f = dht.readTemperature(true);
 
-    // bool dht_success = read_DHT_values();
-    // if(dht_success){
-    //     blink_RGB_LED(100, LOW, LOW, HIGH);
-    // }
-    // else {
-    //     blink_RGB_LED(100, HIGH, LOW, HIGH);
-    // }
-    // delay(2000);
+  Serial.print("humidity from dht: ");
+  Serial.println (h);
+  Serial.print("temperature C from dht: ");
+  Serial.println (t);
+  Serial.print("temperature F from dht: ");
+  Serial.println (f);
+  // float calc = dht.readTemperature(true) - 32 / (float)(9 / 5);
 
-    wifi_session.do_post_request();
+//  int sensorValue = analogRead(A0);
+//  float voltage = sensorValue * (3.3/1023.0);
 
-    delay(5000);
+
+  // Check if any reads failed and exit early (to try again).
+
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  // Compute heat index
+  // Must send in temp in Fahrenheit!
+  float hic = dht.computeHeatIndex(t, h, false);
+  float hif = dht.computeHeatIndex(f, h, true);
+  // You can delete the following Serial.print's, it's just for debugging purposes
+  Serial.print("HIC from dht: ");
+  Serial.println (hic);
+  Serial.print("HIF F from dht: ");
+  Serial.println (hif);
+  float tempC = ss.getTemp();
+  uint16_t capread = ss.touchRead(0);
+
+  Serial.print("temp from soil sensor: "); 
+  Serial.println(tempC);
+  Serial.print("Capactivie from soil sensor: ");
+  Serial.println(capread);
+  delay(100);
+
+  float batteryLevel = map(analogRead(A0), 0.0f, 4095.0f, 0, 100);
+  Serial.print("battery Level: ");
+  Serial.println(batteryLevel);
 }
