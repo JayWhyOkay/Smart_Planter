@@ -6,69 +6,26 @@
 #ifndef _USE_CUSTOM_DHT
 #include <DHT.h>
 
-DHT dht(DHT_PIN, DHT_TYPE);
+class custom_DHT {
 
-class custDHT
-{
 private:
-    float h;
-    float t;
-    float f;
-    float hic;
-    float hif; //float c;
+    DHT dht = DHT(DHT_PIN, DHT_TYPE);
+
+    float __humidity;
+    float __temperature;
+    float __heat_index;
+
+protected:
+
+    void read_sensor_values();
 
 public:
-    bool read_DHT_values()
-    {
-        h = dht.readHumidity();
-        t = dht.readTemperature();
-        //c = (dht.readTemperature(true) - (float)32) * (float)(5 / 9);
-        f = dht.readTemperature(true);
 
-        if (isnan(h) || isnan(t) || isnan(f))
-        {
-            return false;
-        }
-        else
-        {
-            hic = dht.computeHeatIndex(t, h, false);
-            hif = dht.computeHeatIndex(f, h, true);
+    custom_DHT();
 
-            // Serial.print("\nHumidity: ");
-            // Serial.print(h);
-            // Serial.print(" %\t Temperature: ");
-            // Serial.print(t);
-            // Serial.print(" *C ");
-            // Serial.print(f);
-            // Serial.print(" *F\t Heat index: ");
-            // Serial.print(hic);
-            // Serial.print(" *C ");
-            // Serial.print(hif);
-            // Serial.print(" *F\n");
-            return true;
-        }
-    }
-    int getHumidity()
-    {
-        return this.h;
-    }
-    int getCelsius()
-    {
-        return this.t;
-    }
-    int getFahrenheit()
-    {
-        return this.f;
-    }
-    int getHIC()
-    {
-        return this.hic;
-    }
-    int getHIF()
-    {
-        return this.hif;
-    }
-}
+    char *get_string();
+
+};
 
 #else
 #define custom_dht 0 // ignore for now

@@ -10,8 +10,8 @@ extern "C" {
     #include <ping.h>
 } 
 
-#define SS_ID       ""
-#define SS_PW       ""
+#define SS_ID       "Kim Family"
+#define SS_PW       "9497690303"
 #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
 #define HOST_PATH   "/data_collection/receive.py"
 #define HOST_PORT   80
@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
 
-class WiFi_Test{
+class WiFi_Test {
     /*
      *  Debug class for indicating failures of the board. 
      */
@@ -53,6 +53,11 @@ protected:
     static void _ping_sent_cv(void *opt, void *pdata);
     static void _ping_recv_cb(void *opt, void *pdata);
 
+    void __do_http_request(char* request, char* response, uint16_t response_size, 
+        uint16_t response_timeout);
+
+    uint8_t __append_char(char* buffer, char c, uint16_t buffer_size);
+
 public:
     /* Normal constructor */
     WiFi_Test();
@@ -70,20 +75,13 @@ public:
      * 
      * Note: connection to an access point will be necessary first
      */
-
-    void do_http_request(char* request, char* response, uint16_t response_size, 
-        uint16_t response_timeout);
-
-    uint8_t append_char(char* buffer, char c, uint16_t buffer_size);
-
-    void do_post_request();
+    void do_post_request(char* data);
 
     /* ** Testing Functions
      * - ping functions to test functionality 
      *   of WiFi module
      */
     bool ping_host(byte count);
-
     int average_time();
 
 };
