@@ -46,8 +46,7 @@ void setup() {
 
 
 void loop() {
-
-    wifi_session.do_post_request();
+    wifi_session.do_post_request(dht.get_string());
 
     delay(5000);
 

@@ -9,6 +9,7 @@
                 "/home/jaywhyokay/Arduino/libraries/Adafruit_GFX_Library/*",
                 "/home/jaywhyokay/Arduino/libraries/Adafruit_Unified_Sensor/*",
                 "/home/jaywhyokay/Arduino/libraries/DHT_sensor_library/*",
+                "/home/jaywhyokay/Arduino/libraries/Adafruit_seesaw_Library/*",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/esp8266_src/**",
                 "${workspaceFolder}/esp8266_src/lib/**"

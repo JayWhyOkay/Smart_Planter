@@ -10,8 +10,8 @@ extern "C" {
     #include <ping.h>
 } 
 
-#define SS_ID       "Kim Family"
-#define SS_PW       "9497690303"
+#define SS_ID       ""
+#define SS_PW       ""
 #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
 #define HOST_PATH   "/data_collection/receive.py"
 #define HOST_PORT   80
