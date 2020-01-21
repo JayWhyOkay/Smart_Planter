@@ -1,10 +1,11 @@
 /* Includes and libary supports */
 #include <Wire.h>
 #include <ESP8266WiFi.h>
+#include <painlessMesh.h>
 
 #include "constants.h"
 #include "lib/watchdog.h"
-#include "lib/wifi_test.h"
+#include "lib/wifi/wifi_test.h"
 #include "lib/cust_dht.h"
 #include "lib/cust_pr.h"
 
@@ -12,6 +13,7 @@
 Watchdog watchdog;              //! Debug Library Setup
 WiFi_Test wifi_session;
 custom_DHT dht;
+painlessMesh mesh;
 
 const char* ssid      = SS_ID;  //! SS_ID 
 const char* password  = SS_PW;  //! SS_PW 
@@ -48,7 +50,7 @@ void setup() {
 void loop() {
     wifi_session.do_post_request(dht.get_string());
 
-    delay(5000);
+    delay(4000);
 
 }
 
