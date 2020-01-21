@@ -6,7 +6,7 @@ LIBS = $(ESP_LIBS)/SPI \
   $(ESP_LIBS)/Wire \
   $(ESP_LIBS)/ESP8266WiFi \
   $(wildcard $(ARDUINO_LIBS)) \
-  $(wildcard $($(ROOT)/.platformio/lib))
+  $(HOME)/.platformio/lib
 #   $(ROOT)/ext_lib
 
 BOARD = nodemcuv2
