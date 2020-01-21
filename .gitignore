@@ -5,6 +5,9 @@
 sensitive_data.txt
 
 # Python Ignores 
+*.pyc
+__pycache__/
+
 
 # CPP Ignores 
 *.o
