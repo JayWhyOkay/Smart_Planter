@@ -4,10 +4,14 @@
 .vscode/settings.json
 sensitive_data.txt
 
-# Python Ignores 
+# Python Ignores
 *.pyc
+*.pyo
 __pycache__/
 
+# Django Ignores
+*.log
+*.pot
 
 # CPP Ignores 
 *.o
