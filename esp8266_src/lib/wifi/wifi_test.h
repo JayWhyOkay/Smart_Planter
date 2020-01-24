@@ -9,12 +9,25 @@ extern "C" {
     void esp_yield();
     #include <ping.h>
 } 
+/*
+    Host IDs 
+    Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com :  80
+    192.168.1.18 : 8000
+*/
 
-#define SS_ID       ""
-#define SS_PW       ""
-#define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
-#define HOST_PATH   "/data_collection/receive.py"
-#define HOST_PORT   80
+
+#define SS_ID       "J_PHONE"
+#define SS_PW       "iot_testing"
+
+#ifdef _ENABLE_POST_DEBUG
+    #define HOST_ID     "192.168.1.18"
+    #define HOST_PATH   "/data_collection/"
+    #define HOST_PORT   8000
+#else
+    #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
+    #define HOST_PATH   "/data_collection/"
+    #define HOST_PORT   80
+#endif
 
 #define IN_BUFFER_SIZE 1000
 #define OUT_BUFFER_SIZE 1000
