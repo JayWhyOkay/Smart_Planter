@@ -2,11 +2,11 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 
-#include "constants.h"
+#include "lib/constants.h"
 #include "lib/watchdog.h"
 #include "lib/wifi/wifi_test.h"
-#include "lib/cust_dht.h"
-#include "lib/cust_pr.h"
+#include "lib/sensors/cust_dht.h"
+#include "lib/sensors/cust_pr.h"
 
 /* Initialization of global variables */
 Watchdog watchdog;              //! Debug Library Setup
