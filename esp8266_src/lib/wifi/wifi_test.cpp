@@ -113,7 +113,7 @@ void WiFi_Test::__do_http_request(char* request, char* response, uint16_t respon
         while (client.available()){
             __append_char(response, client.read(), OUT_BUFFER_SIZE);
         }
-        // Serial.println(response);
+        Serial.println(response);
     }
     else {
         Serial.println("Connection to server failed!");

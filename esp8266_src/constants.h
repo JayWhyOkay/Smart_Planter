@@ -11,7 +11,7 @@
 #define DHT_PIN 14
 
 /*PhotoResister Defines*/
-#define PhotoResistor A0
+#define PhotoResistor 0
 
 /* WiFi Defines */
 

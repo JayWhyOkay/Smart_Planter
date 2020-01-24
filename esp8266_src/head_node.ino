@@ -4,7 +4,7 @@
 
 #include "constants.h"
 #include "lib/watchdog.h"
-#include "lib/wifi_test.h"
+#include "lib/wifi/wifi_test.h"
 #include "lib/cust_dht.h"
 #include "lib/cust_pr.h"
 
@@ -13,8 +13,6 @@ Watchdog watchdog;              //! Debug Library Setup
 WiFi_Test wifi_session;
 custom_DHT dht;
 
-const char* ssid      = SS_ID;  //! SS_ID 
-const char* password  = SS_PW;  //! SS_PW 
 
 void setup() {
     /* ----------------------------
@@ -44,12 +42,9 @@ void setup() {
     Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
-
 void loop() {
+    wifi_session.do_post_request(dht.get_string());
 
-    wifi_session.do_post_request();
-
-    delay(5000);
-
+    delay(4000);
 }
 
