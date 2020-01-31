@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}PharmContact{% endblock %}
+{% block headerlink %}{% url 'login' %}{% endblock %}
+{% block sidebar %}
+{% endblock %}
 {% block content %}
 <div class="wrapper">
 	<div class="panel title-panel">
@@ -14,8 +17,14 @@
 	</div>
 </div>
 {% endblock %}
-{% block css %}
+{% block contentcss %}
 <style>
+	.wel-header{
+		position: relative;
+	}
+	.regis-link{
+		color: rgb(46, 46, 46);
+	}
 	#contact_link{
   		color:white;
   		background: var(--link-bg);
