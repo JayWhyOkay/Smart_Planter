@@ -17,4 +17,9 @@
 #define EXTERNAL_RGB_GREEN  13
 #define EXTERNAL_RGB_BLUE   15
 
+/* Serial Pins */
+#define SERIAL_PIN_RX   13
+#define SERIAL_PIN_TX   15
+
+
 #endif

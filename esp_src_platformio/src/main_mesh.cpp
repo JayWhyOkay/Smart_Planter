@@ -24,8 +24,8 @@
 #include "pinouts.h"
 
 /* ---- Main Code ---- */
-#define MESH_PREFIX     "test_prefix"
-#define MESH_PASSWORD   "test_pw"
+#define MESH_PREFIX     "sweetie"
+#define MESH_PASSWORD   "uwu"
 #define MESH_PORT       5555
 
 Scheduler userScheduler;
@@ -81,18 +81,21 @@ void setup() {
                             COMMUNICATION | GENERAL | 
                             MSG_TYPES | REMOTE ); // all types on    
 
-    mesh.init(MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT );
+    mesh.init(MESH_PREFIX, MESH_PASSWORD, &userScheduler, MESH_PORT, WIFI_AP_STA, 4, 1, MAX_CONN );
     mesh.onReceive(&receivedCallback);
     mesh.onNewConnection(&newConnectionCallback);
     mesh.onChangedConnections(&changedConnectionCallback);
     mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
-
+  mesh.setRoot(true);
+  mesh.setContainsRoot(true);
     userScheduler.addTask(taskSendMessage);
     taskSendMessage.enable();
+
 
     Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
 void loop() {
+  userScheduler.execute();
     mesh.update();
 }
