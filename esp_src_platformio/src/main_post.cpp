@@ -18,7 +18,7 @@
 #include <uwu_dht.h>
 #include <wifi_http.h>
 
-#tesTING
+/*tesTING*/
 
 
 /* Other includes and constants 
