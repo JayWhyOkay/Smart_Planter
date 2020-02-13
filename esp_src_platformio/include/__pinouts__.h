@@ -19,12 +19,12 @@
 #define SCL_PIN 5           // D1   SCL Pin on ESP8266
 #define SDA_PIN 4           // D2   SDA Pin on ESP8266
 
-#ifdef LEAF_NODE
+// #ifdef LEAF_NODE
     #define EXTERNAL_RGB_RED    12
     #define EXTERNAL_RGB_GREEN  13
     #define EXTERNAL_RGB_BLUE   15
-#else
+// #else
     #define DEBUG_LED   9 // SDD2 
-#endif
+// #endif
 
 #endif

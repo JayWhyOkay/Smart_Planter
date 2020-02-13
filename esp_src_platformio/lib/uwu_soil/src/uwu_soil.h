@@ -20,6 +20,8 @@ class Soil_Sensor {
 public:
     Soil_Sensor();
 
+    void init();
+
     void read_sensor_values();
 
     char *get_char_array();

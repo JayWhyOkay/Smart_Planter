@@ -2,6 +2,10 @@
 
 /* Constructor */
 custom_DHT::custom_DHT() {
+
+}
+
+void custom_DHT::init() {
     Serial.println("[DHT] Initializing DHT Sensor");
     dht.begin();
 }

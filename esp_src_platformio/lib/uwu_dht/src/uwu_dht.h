@@ -25,6 +25,8 @@ public:
 
     custom_DHT();
 
+    void init();
+
     char *get_char_array();
 
     String get_string();
