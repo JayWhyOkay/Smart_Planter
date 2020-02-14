@@ -16,13 +16,20 @@ extern "C" {
 #ifdef _ENABLE_POST_DEBUG
     #define SS_ID       "Kim Family"
     #define SS_PW       "9497690303"
+#endif 
+
+#ifdef _ENABLE_POST_SERVER_DEBUG
     #define HOST_ID     "192.168.1.18"
     #define HOST_PATH   "/data_collection/"
     #define HOST_PORT   8000
+#endif
 
-#else
+#ifdef _ENABLE_POST_DEPLOYMENT
     #define SS_ID       "J_PHONE"
     #define SS_PW       "iot_testing"
+#endif
+
+#ifdef _ENABLE_POST_SERVER_DEPLOYMENT
     #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
     #define HOST_PATH   "/data_collection/"
     #define HOST_PORT   80
@@ -30,7 +37,7 @@ extern "C" {
 
 /* Buffers */
 #define IN_BUFFER_SIZE 1000
-#define OUT_BUFFER_SIZE 1000
+#define OUT_BUFFER_SIZE 100
 
 /* Debug LEDS */
 #ifdef LEAF_NODE

@@ -49,18 +49,18 @@ void setup() {
     /* Initialize Wire for I2C Communication*/
     Wire.begin();
     
-    /* Wifi Initialization */
-    wifi_session.init();
-
     /* Sensor Initialization*/
     dht.init();
+    soil.init();
+
+    /* Wifi Initialization */
+    wifi_session.init();
 
     Serial.println(F("**** SETUP IS FINISHED ****"));
 }
 
 void loop() {
     // wifi_session.do_post_request(dht.get_string());
-
     Serial.println("[LOOP] CREATING DATA STRING");
     String serial_num = String(SERIAL_NUM);
     String dht_readings = dht.get_string();
@@ -74,9 +74,7 @@ void loop() {
 
     char body[200];
     data_string.toCharArray(body, 200);
-    // wifi_session.do_post_request(body);
-
-    // delay(4000);
+    wifi_session.do_post_request(body);
 
     delay(4000);
 }
