@@ -33,9 +33,13 @@ extern "C" {
 #define OUT_BUFFER_SIZE 1000
 
 /* Debug LEDS */
-#define EXTERNAL_RGB_RED    12
-#define EXTERNAL_RGB_GREEN  13
-#define EXTERNAL_RGB_BLUE   15
+#ifdef LEAF_NODE
+    #define EXTERNAL_RGB_RED    12
+    #define EXTERNAL_RGB_GREEN  13
+    #define EXTERNAL_RGB_BLUE   15
+#else
+    #define DEBUG_LED 9
+#endif
 
 #ifdef _ENABLE_WIFI_DEBUG
     #define DEBUG_PING(...) Serial.printf(__VA_ARGS__)

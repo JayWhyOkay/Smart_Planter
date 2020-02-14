@@ -177,6 +177,7 @@ void WiFi_Test::_ping_recv_cb(void *opt, void *resp){
 
 /* Debug Methods */
 void WiFi_Test::blink_led_wifi(){
+#ifdef LEAF_NODE
     delay(100);
     digitalWrite(EXTERNAL_RGB_RED, HIGH);
     digitalWrite(EXTERNAL_RGB_GREEN, LOW);
@@ -185,6 +186,12 @@ void WiFi_Test::blink_led_wifi(){
     digitalWrite(EXTERNAL_RGB_RED, HIGH);
     digitalWrite(EXTERNAL_RGB_GREEN, LOW);
     digitalWrite(EXTERNAL_RGB_BLUE, LOW);
+#else
+    delay(100);
+    digitalWrite(DEBUG_LED, HIGH);
+    delay(100);
+    digitalWrite(DEBUG_LED, LOW);
+#endif
 }
 
 byte WiFi_Test::_expected_count = 0;
