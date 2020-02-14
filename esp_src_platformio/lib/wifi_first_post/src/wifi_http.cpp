@@ -36,7 +36,7 @@ void WiFi_Test::init(){
 void WiFi_Test::do_post_request(char* data){
     Serial.println("[WIFI] Attempting Post Request!");
     char body[200];
-    sprintf(body, "text=%s", data);
+    sprintf(body, "%s", data);
 
     int body_length = strlen(body);
     Serial.println(body);

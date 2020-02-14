@@ -7,7 +7,7 @@
 
 #define SOIL_I2C_ADDRESS 0x36
 #define SOIL_READ_DELAY 100
-#define MAX_ATTEMPTS 3
+#define MAX_ATTEMPTS 5
 
 class Soil_Sensor {
 
