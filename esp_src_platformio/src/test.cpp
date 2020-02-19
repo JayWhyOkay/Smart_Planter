@@ -9,6 +9,13 @@
 //
 //************************************************************
 #include <painlessMesh.h>
+#include <Arduino.h>
+#include <Wire.h>
+#include <uwu_dht.h>
+#include <uwu_soil.h>
+#include <uwu_pr.h>
+#include <wifi_http.h>
+#include "__pinouts__.h"
 
 // some gpio pin that is connected to an LED...
 // on my rig, this is 5, change to the right number of your LED.
@@ -31,6 +38,8 @@ void delayReceivedCallback(uint32_t from, int32_t delay);
 
 Scheduler     userScheduler; // to control your personal task
 painlessMesh  mesh;
+custom_DHT dht;
+Soil_Sensor soil;
 
 bool calc_delay = false;
 SimpleList<uint32_t> nodes;
@@ -46,6 +55,8 @@ void setup() {
   Serial.begin(115200);
 
   pinMode(LED, OUTPUT);
+  dht.init();
+  soil.init();  
 
   mesh.setDebugMsgTypes(ERROR | DEBUG);  // set before init() so that you can see error messages
 
@@ -86,12 +97,41 @@ void setup() {
 void loop() {
   mesh.update();
   digitalWrite(LED, !onFlag);
+    // Serial.println("[LOOP] CREATING DATA STRING");
+    // String serial_num = String(SERIAL_NUM);
+    // String dht_readings = dht.get_string();
+    // String soil_readings = soil.get_string();
+    // String data_string = String("num=" + serial_num 
+    //                             + "&" + 
+    //                             dht_readings 
+    //                             + "&" + 
+    //                             soil_readings);
+    // Serial.println(String("[LOOP] Data String: " + data_string));
+
+    // char body[200];
+    // data_string.toCharArray(body, 200);
+    // delay(4000);
 }
 
 void sendMessage() {
   String msg = "Hello from node ";
   msg += mesh.getNodeId();
   msg += " myFreeMemory: " + String(ESP.getFreeHeap());
+
+
+  
+    String serial_num = String(SERIAL_NUM);
+    String dht_readings = dht.get_string();
+    String soil_readings = soil.get_string();
+    String data_string = String("num=" + serial_num 
+                                + "&" + 
+                                dht_readings 
+                                + "&" + 
+                                soil_readings);
+    //Serial.println(String("[LOOP] Data String: " + data_string));
+
+  msg+="\n" + String(data_string);
+  
   mesh.sendBroadcast(msg);
 
   if (calc_delay) {
@@ -102,9 +142,8 @@ void sendMessage() {
     }
     calc_delay = false;
   }
-
   Serial.printf("Sending message: %s\n", msg.c_str());
-  
+
   taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));  // between 1 and 5 seconds
 }
 

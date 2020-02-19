@@ -59,9 +59,9 @@ String Soil_Sensor::get_string(){
     output += String(__soil_temperature, 3);
     output += "&soil=";
     output += String(__cap_touch_read);
-    Serial.print("[SOIL] Soil Sensor String: ");
-    Serial.print(output);
-    Serial.print("\n");
+    // Serial.print("[SOIL] Soil Sensor String: ");
+    // Serial.print(output);
+    // Serial.print("\n");
 
     return output;
 }

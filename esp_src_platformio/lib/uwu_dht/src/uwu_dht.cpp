@@ -31,9 +31,9 @@ char *custom_DHT::get_char_array() {
     char buffer[100];
     sprintf(buffer, "temp=%f&hum=%f", __temperature, __humidity);
 
-    Serial.print("[DHT] DHT String: ");
-    Serial.print(buffer);
-    Serial.print("\n");
+    // Serial.print("[DHT] DHT String: ");
+    // Serial.print(buffer);
+    // Serial.print("\n");
 
     return buffer;
 }
@@ -47,9 +47,9 @@ String custom_DHT::get_string() {
     output += "&hum=";
     output += String(__humidity, 3);
 
-    Serial.print("[DHT] DHT String: ");
-    Serial.print(output);
-    Serial.print("\n");
+    // Serial.print("[DHT] DHT String: ");
+    // Serial.print(output);
+    // Serial.print("\n");
 
     return output;
 }
