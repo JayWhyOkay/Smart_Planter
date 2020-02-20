@@ -28,8 +28,8 @@ char *custom_DHT::get_char_array() {
     Serial.println("[DHT] Calling get_string()");
     read_sensor_values();
     
-    char buffer[100];
-    sprintf(buffer, "temp=%f&hum=%f", __temperature, __humidity);
+    char buffer[200];
+    sprintf(buffer, "temperature=%f&humidity=%f", __temperature, __humidity);
 
     Serial.print("[DHT] DHT String: ");
     Serial.print(buffer);
@@ -42,9 +42,9 @@ String custom_DHT::get_string() {
     Serial.println("[DHT] Calling get_string()");
     read_sensor_values();
 
-    String output = "temp=";
+    String output = "temperature=";
     output += String(__temperature, 3);
-    output += "&hum=";
+    output += "&humidity=";
     output += String(__humidity, 3);
 
     Serial.print("[DHT] DHT String: ");

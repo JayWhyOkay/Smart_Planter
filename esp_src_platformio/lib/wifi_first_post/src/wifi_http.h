@@ -30,14 +30,15 @@ extern "C" {
 #endif
 
 #ifdef _ENABLE_POST_SERVER_DEPLOYMENT
-    #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
+    // #define HOST_ID     "Testing-env.wy7afakpky.us-east-2.elasticbeanstalk.com"
+    #define HOST_ID     "uwuplants.org"
     #define HOST_PATH   "/data_collection/"
     #define HOST_PORT   80
 #endif
 
 /* Buffers */
 #define IN_BUFFER_SIZE 1000
-#define OUT_BUFFER_SIZE 100
+#define OUT_BUFFER_SIZE 3500
 
 /* Debug LEDS */
 #ifdef LEAF_NODE

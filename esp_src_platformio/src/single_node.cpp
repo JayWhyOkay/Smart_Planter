@@ -65,7 +65,7 @@ void loop() {
     String serial_num = String(SERIAL_NUM);
     String dht_readings = dht.get_string();
     String soil_readings = soil.get_string();
-    String data_string = String("num=" + serial_num 
+    String data_string = String("mcu_no=" + serial_num 
                                 + "&" + 
                                 dht_readings 
                                 + "&" + 
