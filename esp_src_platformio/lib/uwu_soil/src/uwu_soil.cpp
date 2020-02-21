@@ -43,7 +43,7 @@ char *Soil_Sensor::get_char_array(){
     read_sensor_values();
     
     char *buffer = new char[200];
-    sprintf(buffer, "soil_temperature=%f&soil_moisture=%d", __soil_temperature, __cap_touch_read);
+    sprintf(buffer, "soil_temp=%f&soil_moisture=%d", __soil_temperature, __cap_touch_read);
     Serial.print("[SOIL] Soil Sensor String: ");
     Serial.print(buffer);
     Serial.print("\n");
@@ -55,7 +55,7 @@ String Soil_Sensor::get_string(){
     Serial.println("[SOIL] Calling get_string()");
     read_sensor_values();
 
-    String output = "soil_temperature=";
+    String output = "soil_temp=";
     output += String(__soil_temperature, 3);
     output += "&soil_moisture=";
     output += String(__cap_touch_read);

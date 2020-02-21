@@ -76,5 +76,5 @@ void loop() {
     data_string.toCharArray(body, 200);
     wifi_session.do_post_request(body);
 
-    delay(4000);
+    delay(1000*60*10);
 }

@@ -38,7 +38,7 @@ extern "C" {
 
 /* Buffers */
 #define IN_BUFFER_SIZE 1000
-#define OUT_BUFFER_SIZE 3500
+#define OUT_BUFFER_SIZE 1000
 
 /* Debug LEDS */
 #ifdef LEAF_NODE
