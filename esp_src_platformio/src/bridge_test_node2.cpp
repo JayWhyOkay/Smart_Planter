@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-char m[50];
+char m[100];
 
 void setup()
 {
@@ -9,7 +9,7 @@ void setup()
 
 void loop()
 {
-    Serial.readBytes(m, 30);
+    Serial.readBytes(m, 100);
     Serial.println(m);
     delay(1000);
 }
