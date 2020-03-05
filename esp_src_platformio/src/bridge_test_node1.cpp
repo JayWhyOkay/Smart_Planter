@@ -7,6 +7,7 @@
 
 custom_DHT dht;
 Soil_Sensor soil;
+PR_Sensor pr;
 
 void setup()
 {
@@ -14,6 +15,7 @@ void setup()
 
     dht.init();
     soil.init();  
+    pr.init();
 }
 
 void loop()
@@ -21,6 +23,7 @@ void loop()
 
     String dht_readings = dht.get_string();
     String soil_readings = soil.get_string();
+    String pr_readings = pr.get_string();
     String data_string = String("dht=" + 
                                 dht_readings 
                                 + "& soil = " + 
