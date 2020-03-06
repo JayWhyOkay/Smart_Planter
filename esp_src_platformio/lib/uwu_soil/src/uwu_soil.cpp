@@ -5,7 +5,7 @@ Soil_Sensor::Soil_Sensor(){
 }
 
 void Soil_Sensor::init(){
-    Serial.println("[SOIL] Initializing Soil Sensor");
+    //Serial.println("[SOIL] Initializing Soil Sensor");
     int attempt = 0;
     while(!see_saw.begin(SOIL_I2C_ADDRESS) && attempt < MAX_ATTEMPTS){
         Serial.print("[SOIL] Error! Seesaw not found. Trying again. Attempt #");
@@ -19,10 +19,10 @@ void Soil_Sensor::init(){
         state = 0;
     }
     else {
-        Serial.println("[SOIL] Seesaw found! Soil Sensor Initialized!");
-        Serial.print("[SOIL] seesaw version: ");
-        Serial.print(see_saw.getVersion(), HEX);
-        Serial.print("\n");
+        //Serial.println("[SOIL] Seesaw found! Soil Sensor Initialized!");
+        //Serial.print("[SOIL] seesaw version: ");
+        //Serial.print(see_saw.getVersion(), HEX);
+        //Serial.print("\n");
         state = 1;
     }
 }
@@ -39,20 +39,20 @@ void Soil_Sensor::read_sensor_values(){
 }
 
 char *Soil_Sensor::get_char_array(){
-    Serial.println("[SOIL] Calling get_string()");
+    //Serial.println("[SOIL] Calling get_string()");
     read_sensor_values();
     
     char *buffer = new char[200];
     sprintf(buffer, "soil_t=%f&soil=%d", __soil_temperature, __cap_touch_read);
-    Serial.print("[SOIL] Soil Sensor String: ");
-    Serial.print(buffer);
-    Serial.print("\n");
+    //Serial.print("[SOIL] Soil Sensor String: ");
+    //Serial.print(buffer);
+    //Serial.print("\n");
     
     return buffer;
 }
 
 String Soil_Sensor::get_string(){
-    Serial.println("[SOIL] Calling get_string()");
+    //Serial.println("[SOIL] Calling get_string()");
     read_sensor_values();
 
     String output = "soil_t=";
