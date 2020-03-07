@@ -6,13 +6,13 @@ custom_DHT::custom_DHT() {
 }
 
 void custom_DHT::init() {
-    Serial.println("[DHT] Initializing DHT Sensor");
+    //Serial.println("[DHT] Initializing DHT Sensor");
     dht.begin();
 }
 
 /* Protected */
 void custom_DHT::read_sensor_values() {
-    Serial.println("[DHT] Reading Sensor Values.");
+    //Serial.println("[DHT] Reading Sensor Values.");
     __humidity = dht.readHumidity();
     __temperature = dht.readTemperature();
 
@@ -25,21 +25,21 @@ void custom_DHT::read_sensor_values() {
 
 /* Public */
 char *custom_DHT::get_char_array() {
-    Serial.println("[DHT] Calling get_string()");
+    //Serial.println("[DHT] Calling get_string()");
     read_sensor_values();
     
     char buffer[200];
     sprintf(buffer, "temp=%f&humidity=%f", __temperature, __humidity);
 
-    Serial.print("[DHT] DHT String: ");
-    Serial.print(buffer);
-    Serial.print("\n");
+    // Serial.print("[DHT] DHT String: ");
+    // Serial.print(buffer);
+    // Serial.print("\n");
 
     return buffer;
 }
 
 String custom_DHT::get_string() {
-    Serial.println("[DHT] Calling get_string()");
+    //Serial.println("[DHT] Calling get_string()");
     read_sensor_values();
 
     String output = "temp=";
@@ -47,9 +47,9 @@ String custom_DHT::get_string() {
     output += "&humidity=";
     output += String(__humidity, 3);
 
-    Serial.print("[DHT] DHT String: ");
-    Serial.print(output);
-    Serial.print("\n");
+    // Serial.print("[DHT] DHT String: ");
+    // Serial.print(output);
+    // Serial.print("\n");
 
     return output;
 }

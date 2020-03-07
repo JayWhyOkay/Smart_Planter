@@ -5,6 +5,7 @@
 #include <uwu_soil.h>
 #include <uwu_pr.h>
 #include <wifi_http.h>
+#include <string>
 #include "__pinouts__.h"
 
 #define   MESH_SSID       "whateverYouLike"
@@ -27,6 +28,8 @@ PR_Sensor pr;
 
 bool calc_delay = false;
 SimpleList<uint32_t> nodes;
+String serial_num;
+String rcved;
 
 void sendMessage() ; // Prototype
 Task taskSendMessage( TASK_SECOND * 1, TASK_FOREVER, &sendMessage ); // start with a one second interval
@@ -57,6 +60,32 @@ void setup() {
 
 void loop() {
   mesh.update();
+  String data_string = "stan monsta x please\n";
+  String dht_readings = dht.get_string();
+    String soil_readings = soil.get_string();
+    String pr_readings = pr.get_string();
+  int mx = atoi(serial_num.c_str());
+  if (mx > 0)
+  {
+    serial_num = String("serial num = " + serial_num + "\n" + "dht = " + dht_readings + "\n& soil = " + 
+                                soil_readings + "\n&pr = " + pr_readings + "\n\n"+ "rcved from = " + rcved + "\n\n\n");
+    int n = serial_num.length();
+    char c[n+1];
+    strcpy(c,serial_num.c_str());
+    Serial.write(c, n);
+    delay(1000);  
+  }
+//   else
+//   {
+      
+//     int n = data_string.length();
+//     char c[n+1];
+//     strcpy(c,data_string.c_str());
+//     Serial.write(c, n);
+//     delay(1000);  
+//   }
+
+
     // Serial.println("[LOOP] CREATING DATA STRING");
     // String serial_num = String(SERIAL_NUM);
     // String dht_readings = dht.get_string();
@@ -74,22 +103,23 @@ void loop() {
 }
 
 void sendMessage() {
-  // String msg = "Hello from node ";
-  // msg += mesh.getNodeId();
-  // msg += " myFreeMemory: " + String(ESP.getFreeHeap());
-    String msg;
+//   String msg = "Hello from node ";
+//   msg += mesh.getNodeId();
+//   msg += " myFreeMemory: " + String(ESP.getFreeHeap());
 
+  String msg;
   
-    String serial_num = String(SERIAL_NUM);
-    String dht_readings = dht.get_string();
-    String soil_readings = soil.get_string();
-    String pr_readings = pr.get_string();
-    String data_string = String("Serial = " + serial_num + "\ndht=" + 
-                                dht_readings 
-                                + "\n& soil = " + 
-                                soil_readings + "\n&pr = " + pr_readings + "\n");
+     serial_num = String(SERIAL_NUM);
+    // String dht_readings = dht.get_string();
+    // String soil_readings = soil.get_string();
+    // String pr_readings = pr.get_string();
+    // String data_string = String("dht=" + 
+    //                             dht_readings 
+    //                             + "\n& soil = " + 
+    //                             soil_readings + "\n&pr = " + pr_readings + "\n");
    
     //Serial.println(String("[LOOP] Data String: " + data_string));
+        String data_string = String("num=" + serial_num);
 
   msg+="\n" + String(data_string);
   
@@ -110,6 +140,7 @@ void sendMessage() {
 
 
 void receivedCallback(uint32_t from, String & msg) {
+  rcved = msg;
   //Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
 }
 
@@ -127,7 +158,7 @@ void changedConnectionCallback() {
 
   SimpleList<uint32_t>::iterator node = nodes.begin();
   while (node != nodes.end()) {
-    Serial.printf(" %u", *node);
+    //Serial.printf(" %u", *node);
     node++;
   }
   //Serial.println();
