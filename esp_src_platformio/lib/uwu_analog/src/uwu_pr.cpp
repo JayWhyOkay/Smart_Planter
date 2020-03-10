@@ -24,7 +24,7 @@ char *PR_Sensor::get_char_array(){
     read_sensor_values();
 
     char buffer[100];
-    sprintf(buffer, "voltage = %f", voltage);
+    sprintf(buffer, "light_reading%f", voltage);
 
     return buffer;
 }
@@ -33,7 +33,7 @@ String PR_Sensor::get_string(){
     //Serial.println("[PhotoResistor] Calling get_string");
     read_sensor_values();
 
-    String output = "voltage =";
+    String output = "light_reading=";
     output += String(voltage, 3);
 
     return output;

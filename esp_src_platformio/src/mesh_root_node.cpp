@@ -33,83 +33,58 @@ String rcved;
 
 void sendMessage() ; // Prototype
 Task taskSendMessage( TASK_SECOND * 1, TASK_FOREVER, &sendMessage ); // start with a one second interval
-
+//Task
 
 void setup() {
-  Serial.begin(115200);
+    Serial.begin(115200);
 
-  dht.init();
-  soil.init();  
-  pr.init();
+    dht.init();
+    soil.init();  
+    pr.init();
+    randomSeed(analogRead(A0));
 
-  mesh.setDebugMsgTypes(ERROR | DEBUG);  // set before init() so that you can see error messages
+    mesh.setDebugMsgTypes(ERROR | DEBUG);  
+    mesh.init(MESH_SSID, MESH_PASSWORD, &userScheduler, MESH_PORT);
+    mesh.onReceive(&receivedCallback);
+    mesh.onNewConnection(&newConnectionCallback);
+    mesh.onChangedConnections(&changedConnectionCallback);
+    mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
+    mesh.onNodeDelayReceived(&delayReceivedCallback);
 
-  mesh.init(MESH_SSID, MESH_PASSWORD, &userScheduler, MESH_PORT);
-  mesh.onReceive(&receivedCallback);
-  mesh.onNewConnection(&newConnectionCallback);
-  mesh.onChangedConnections(&changedConnectionCallback);
-  mesh.onNodeTimeAdjusted(&nodeTimeAdjustedCallback);
-  mesh.onNodeDelayReceived(&delayReceivedCallback);
-
-  userScheduler.addTask( taskSendMessage );
-  taskSendMessage.enable();
-
-
-  randomSeed(analogRead(A0));
+    userScheduler.addTask( taskSendMessage );
+    taskSendMessage.enable();
 }
 
 void loop() {
-  mesh.update();
-  String data_string = "stan monsta x please\n";
-  String dht_readings = dht.get_string();
+    mesh.update();
+    String data_string = "stan monsta x please\n";
+    String dht_readings = dht.get_string();
     String soil_readings = soil.get_string();
     String pr_readings = pr.get_string();
-  int mx = atoi(serial_num.c_str());
-  if (mx > 0)
-  {
-    serial_num = String("serial num = " + serial_num + "\n" + "dht = " + dht_readings + "\n& soil = " + 
+    int mx = atoi(serial_num.c_str());
+    if (mx > 0)
+    {
+        serial_num = String("serial num = " + serial_num + "\n" + "dht = " + dht_readings + "\n& soil = " + 
                                 soil_readings + "\n&pr = " + pr_readings + "\n\n"+ "rcved from = " + rcved + "\n\n\n");
-    int n = serial_num.length();
-    char c[n+1];
-    strcpy(c,serial_num.c_str());
-    Serial.write(c, n);
-    delay(1000);  
-  }
-//   else
-//   {
-      
-//     int n = data_string.length();
-//     char c[n+1];
-//     strcpy(c,data_string.c_str());
-//     Serial.write(c, n);
-//     delay(1000);  
-//   }
-
-
-    // Serial.println("[LOOP] CREATING DATA STRING");
-    // String serial_num = String(SERIAL_NUM);
-    // String dht_readings = dht.get_string();
-    // String soil_readings = soil.get_string();
-    // String data_string = String("num=" + serial_num 
-    //                             + "&" + 
-    //                             dht_readings 
-    //                             + "&" + 
-    //                             soil_readings);
-    // Serial.println(String("[LOOP] Data String: " + data_string));
-
-    // char body[200];
-    // data_string.toCharArray(body, 200);
-    // delay(4000);
+        int n = serial_num.length();
+        char c[n+1];
+        strcpy(c,serial_num.c_str());
+        Serial.write(c, n);
+        delay(1000);  
+    }
 }
 
+
+/* 
+**** Mesh Functions **** 
+ */
 void sendMessage() {
 //   String msg = "Hello from node ";
 //   msg += mesh.getNodeId();
 //   msg += " myFreeMemory: " + String(ESP.getFreeHeap());
-
-  String msg;
+    String msg;
   
-     serial_num = String(SERIAL_NUM);
+    serial_num = String(SERIAL_NUM);
     // String dht_readings = dht.get_string();
     // String soil_readings = soil.get_string();
     // String pr_readings = pr.get_string();
@@ -119,56 +94,53 @@ void sendMessage() {
     //                             soil_readings + "\n&pr = " + pr_readings + "\n");
    
     //Serial.println(String("[LOOP] Data String: " + data_string));
-        String data_string = String("num=" + serial_num);
+    String data_string = String("num=" + serial_num);
 
-  msg+="\n" + String(data_string);
+    msg += "\n" + String(data_string);
   
-  mesh.sendBroadcast(msg);
+    mesh.sendBroadcast(msg);
 
-  if (calc_delay) {
-    SimpleList<uint32_t>::iterator node = nodes.begin();
-    while (node != nodes.end()) {
-      mesh.startDelayMeas(*node);
-      node++;
+    if (calc_delay) {
+        SimpleList<uint32_t>::iterator node = nodes.begin();
+        while (node != nodes.end()) {
+            mesh.startDelayMeas(*node);
+            node++;
+        }
+        calc_delay = false;
     }
-    calc_delay = false;
-  }
-  //Serial.printf("Sending message: %s\n", msg.c_str());
-
-  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));  // between 1 and 5 seconds
+    // Serial.printf("Sending message: %s\n", msg.c_str());
+    taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));  // between 1 and 5 seconds
 }
 
-
 void receivedCallback(uint32_t from, String & msg) {
-  rcved = msg;
-  //Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
+    rcved = msg;
+    Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
 }
 
 void newConnectionCallback(uint32_t nodeId) {
-  //Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
-  //Serial.printf("--> startHere: New Connection, %s\n", mesh.subConnectionJson(true).c_str());
+    //Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
+    //Serial.printf("--> startHere: New Connection, %s\n", mesh.subConnectionJson(true).c_str());
 }
 
 void changedConnectionCallback() {
-  //Serial.printf("Changed connections\n");
-  nodes = mesh.getNodeList();
+    nodes = mesh.getNodeList();
 
-  //Serial.printf("Num nodes: %d\n", nodes.size());
-  //Serial.printf("Connection list:");
+    Serial.printf("Num nodes: %d\n", nodes.size());
+    Serial.printf("Connection list:");
 
-  SimpleList<uint32_t>::iterator node = nodes.begin();
-  while (node != nodes.end()) {
-    //Serial.printf(" %u", *node);
-    node++;
-  }
-  //Serial.println();
-  calc_delay = true;
+    SimpleList<uint32_t>::iterator node = nodes.begin();
+    while (node != nodes.end()) {
+        Serial.printf(" %u", *node);
+        node++;
+    }
+    Serial.println();
+    calc_delay = true;
 }
 
 void nodeTimeAdjustedCallback(int32_t offset) {
-  //Serial.printf("Adjusted time %u. Offset = %d\n", mesh.getNodeTime(), offset);
+    //Serial.printf("Adjusted time %u. Offset = %d\n", mesh.getNodeTime(), offset);
 }
 
 void delayReceivedCallback(uint32_t from, int32_t delay) {
-  //Serial.printf("Delay to node %u is %d us\n", from, delay);
+    //Serial.printf("Delay to node %u is %d us\n", from, delay);
 }
