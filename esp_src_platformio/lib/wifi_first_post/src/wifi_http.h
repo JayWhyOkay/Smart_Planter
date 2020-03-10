@@ -14,8 +14,8 @@ extern "C" {
         192.168.1.18 : 8000
 */
 #ifdef _ENABLE_POST_DEBUG
-    #define SS_ID       "AttackonJun"
-    #define SS_PW       "stanmonstax"
+    #define SS_ID       "Kim Family"
+    #define SS_PW       "9497690303"
 #endif 
 
 #ifdef _ENABLE_POST_SERVER_DEBUG
